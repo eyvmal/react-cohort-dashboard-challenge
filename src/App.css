@@ -1,42 +1,109 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/*
+Color palette:
+https://www.color-hex.com/color-palette/1051132
+ */
+
+/* App-wide styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #d5af84;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Header styles */
+.app-header {
+  height: 100px;
+  background-color: #84563c;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header > * {
+  margin: 0 40px;
+}
+
+.app-header svg {
+  height: 80px;
+}
+
+/* Profile image */
+.header-profile-image-container {
+  height: 65px;
+  width: 65px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #342438;
+  overflow: hidden;
+}
+
+.circle {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #342438;
+  font-size: 22px;
+  font-weight: bold;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.profile-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Navbar styles */
+.navbar {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.navbar-item-container {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
-.card {
-  padding: 2em;
+.navbar-item-container.active {
+  background-color: #c39d75;
 }
 
-.read-the-docs {
-  color: #888;
+.navbar-item-container.active .nav-link {
+  color: #342438;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none; 
+  color: #3c436e;
+  cursor: pointer;
+}
+
+.nav-link svg {
+  margin-bottom: 5px;
+}
+
+.nav-link:hover {
+  color: #342438;
 }

@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.post-item-container {
+    padding: 15px;
+}
+
+.post-item-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.post-item-header-text {
+    padding-left: 15px;
+}
+
+.post-item-header-text p {
+    padding-top: 10px;
+}
+
+.post-item-content {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.post-profile-image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #342438;
+    overflow: hidden;
+}

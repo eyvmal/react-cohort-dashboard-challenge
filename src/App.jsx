@@ -1,34 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {createContext, useContext, useEffect, useState} from 'react'
 import './App.css'
+import Navbar from "./pages/shared/Navbar.jsx";
+import {Route, Routes} from "react-router-dom";
+import HomePage from "./pages/home/HomePage.jsx";
+import ProfilePage from "./pages/profile/ProfilePage.jsx";
+import Header from "./pages/shared/Header.jsx";
+import {ApiContext} from "./api/ApiProvider.jsx";
+
+export const PostContext = createContext({});
+export const UserContext = createContext({});
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState(null);
+  const [contacts, setContacts] = useState([]);
+  const {getPosts, getContacts, getContactById} = useContext(ApiContext);
+
+  const initializeData = async () => {
+    // Fetch all posts
+    const jsonPostData = await getPosts();
+    const sortedPostData = jsonPostData.sort((a, b) => b.id - a.id);
+    setPosts(sortedPostData);
+
+    // Fetch all contacts
+    const jsonContactData = await getContacts();
+    setContacts(jsonContactData);
+
+    // Set this user as logged in
+    const user = await getContactById(1)
+    setUser(user);
+  };
+
+  const getInitials = (contact) => {
+    if (!contact || !contact.firstName || !contact.lastName) {
+      return ""; // Return an empty string or placeholder
+    }
+    
+    const fullName = `${contact.firstName} ${contact.lastName}`
+    const nameParts = fullName.split(' ').filter(Boolean);
+
+    const initials = nameParts.map(part => {
+      const letter = part.match(/[a-zA-Z]/);
+      return letter ? letter[0].toUpperCase() : '';
+    });
+    return initials.join('');
+  }
+
+  useEffect(() => {
+    initializeData();
+  }, []);
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <UserContext.Provider value={{user}}>
+      <PostContext.Provider value={{posts, contacts, getInitials, initializeData}}>
+        <Header/>
+        <div className="app-layout">
+          <Navbar/>
+          <div className="content">
+
+            <Routes>
+              <Route path="/" element={<HomePage/>}/>
+              <Route path="/profile" element={<ProfilePage/>}/>
+            </Routes>
+          </div>
+        </div>
+      </PostContext.Provider>
+    </UserContext.Provider>
   )
 }
 

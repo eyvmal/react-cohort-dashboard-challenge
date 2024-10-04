@@ -1,0 +1,17 @@
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.homepage-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.homepage-list-item {
+    background-color: #DFCAA0;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 10px;
+}
